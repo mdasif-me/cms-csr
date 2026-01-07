@@ -2,7 +2,6 @@
 'use client';
 
 import { Button } from '@/app/components/shared/ui/button';
-import { Checkbox } from '@/app/components/shared/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -12,7 +11,6 @@ import {
   FormMessage,
 } from '@/app/components/shared/ui/form';
 import { Input } from '@/app/components/shared/ui/input';
-import { Label } from '@/app/components/shared/ui/label';
 import { Spinner } from '@/app/components/shared/ui/spinner';
 import { useAuth } from '@/lib/auth/hooks/use-auth';
 import { loginSchema, type LoginFormData } from '@/lib/features/auth';
@@ -105,30 +103,6 @@ export function LoginForm() {
                   </span>
                 </div>
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name='remember_me'
-          render={({ field }) => (
-            <FormItem>
-              <div className='flex items-center space-x-2'>
-                <FormControl>
-                  <Checkbox
-                    id='remember_me'
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    onBlur={field.onBlur}
-                    name={field.name}
-                    ref={field.ref}
-                    disabled={field.disabled}
-                  />
-                </FormControl>
-                <Label htmlFor='remember_me'>Remember Me</Label>
-              </div>
               <FormMessage />
             </FormItem>
           )}
