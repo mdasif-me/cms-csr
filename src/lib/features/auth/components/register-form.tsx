@@ -15,7 +15,13 @@ import { Input } from '@/app/components/shared/ui/input';
 import { Label } from '@/app/components/shared/ui/label';
 import { Spinner } from '@/app/components/shared/ui/spinner';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EyeClosedIcon, EyeIcon } from 'lucide-react';
+import {
+  EyeClosedIcon,
+  EyeIcon,
+  LockIcon,
+  MailIcon,
+  UserIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -67,14 +73,19 @@ export function RegisterForm() {
           name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input
-                  type='text'
-                  placeholder='Enter your name'
-                  className='w-full'
-                  {...field}
-                />
+                <div className='flex items-center relative'>
+                  <span className='absolute left-3 cursor-pointer'>
+                    <UserIcon className='text-muted-foreground' />
+                  </span>
+                  <Input
+                    type='text'
+                    placeholder='Enter your full name'
+                    className='w-full pl-11'
+                    {...field}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,14 +96,19 @@ export function RegisterForm() {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email Address</FormLabel>
               <FormControl>
-                <Input
-                  type='email'
-                  placeholder='Enter your email'
-                  className='w-full'
-                  {...field}
-                />
+                <div className='flex items-center relative'>
+                  <span className='absolute left-3 cursor-pointer'>
+                    <MailIcon className='text-muted-foreground' />
+                  </span>
+                  <Input
+                    type='email'
+                    placeholder='admin@educenter.com'
+                    className='w-full pl-11'
+                    {...field}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -106,17 +122,24 @@ export function RegisterForm() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className='flex items-center relative'>
+                  <span className='absolute left-3 cursor-pointer'>
+                    <LockIcon className='text-muted-foreground' />
+                  </span>
                   <Input
                     type={isPassVisible ? 'text' : 'password'}
                     placeholder='Enter your password'
-                    className='w-full pr-10'
+                    className='w-full pr-11 pl-11'
                     {...field}
                   />
                   <span
                     className='absolute right-3 cursor-pointer'
                     onClick={togglePasswordVisibility}
                   >
-                    {isPassVisible ? <EyeClosedIcon /> : <EyeIcon />}
+                    {isPassVisible ? (
+                      <EyeClosedIcon className='text-muted-foreground' />
+                    ) : (
+                      <EyeIcon className='text-muted-foreground' />
+                    )}
                   </span>
                 </div>
               </FormControl>
@@ -132,17 +155,24 @@ export function RegisterForm() {
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <div className='flex items-center relative'>
+                  <span className='absolute left-3 cursor-pointer'>
+                    <LockIcon className='text-muted-foreground' />
+                  </span>
                   <Input
                     type={isPassVisible ? 'text' : 'password'}
                     placeholder='Enter your password again'
-                    className='w-full pr-10'
+                    className='w-full pr-11 pl-11'
                     {...field}
                   />
                   <span
                     className='absolute right-3 cursor-pointer'
                     onClick={togglePasswordVisibility}
                   >
-                    {isPassVisible ? <EyeClosedIcon /> : <EyeIcon />}
+                    {isPassVisible ? (
+                      <EyeClosedIcon className='text-muted-foreground' />
+                    ) : (
+                      <EyeIcon className='text-muted-foreground' />
+                    )}
                   </span>
                 </div>
               </FormControl>

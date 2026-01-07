@@ -1,33 +1,34 @@
-import { LoginForm } from '@/lib/features/auth';
 import Link from 'next/link';
+import { RegisterForm } from '../../../lib/features/auth/components/register-form';
 import Logo from '../../components/shared/logo';
 import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
 
 export default function LoginPage() {
   return (
-    <div className='auth-bg min-h-[90vh] flex items-center justify-center'>
+    <div className='auth-bg min-h-[98vh] flex items-center justify-center'>
       <div className='container mx-auto p-4'>
         <Card className='shadow-lg max-w-lg mx-auto'>
           <CardContent>
             <div className='space-y-4 w-fit mx-auto'>
               <Logo />
               <article className='text-center space-y-4'>
-                <p>Admin Login</p>
+                <p>Admin Registration</p>
                 <p className='text-secondary-foreground'>
-                  Welcome back! Please enter your credentials
+                  Welcome! Please enter your details to create an account.
                 </p>
               </article>
             </div>
             <div className='mt-8'>
-              <LoginForm />
+              <RegisterForm />
             </div>
           </CardContent>
-          <CardFooter className='justify-center text-primary text-sm'>
+          <CardFooter className='justify-center text-sm'>
+            Already have an account?{' '}
             <Link
-              href={'/forgot-password'}
-              className='hover:underline hover:opacity-90'
+              href={'/login'}
+              className='hover:underline hover:opacity-90 ml-1 text-primary'
             >
-              Forgot password?
+              Login
             </Link>
           </CardFooter>
         </Card>
