@@ -144,8 +144,8 @@
   box-shadow: 0 10px 15px -3px rgba(43, 127, 255, 0.25),
     0 4px 6px -4px rgba(43, 127, 255, 0.25);
 }
-.login-bg {
-  background-image: url('../../../public/img/auth/login-bg.svg');
+.auth-bg {
+  background-image: url('../../../public/img/auth/auth-bg.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,52 +1,39 @@
-import { RegisterForm } from '@/lib/features/auth/components/register-form';
-import Image from 'next/image';
+import { LoginForm } from '@/lib/features/auth';
 import Link from 'next/link';
-import login from 'public/img/auth/login.svg';
 import Logo from '../../components/shared/logo';
-import { Separator } from '../../components/shared/ui/separator';
+import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
 
-export default function RegisterPage() {
+export default function LoginPage() {
   return (
-    <div className='flex items-center justify-center'>
-      <div className='w-full h-full grid lg:grid-cols-2'>
-        <div className='relative sm:max-w-lg m-auto w-full flex flex-col items-center p-8 outline-0 sm:outline-2 outline-border/40 dark:outline-border/80 outline-offset-0.5'>
-          <div className='max-sm:hidden absolute border-t top-0 inset-x-0 w-[calc(100%+4rem)] -translate-x-8' />
-          <div className='max-sm:hidden absolute border-b bottom-0 inset-x-0 w-[calc(100%+4rem)] -translate-x-8' />
-          <div className='max-sm:hidden absolute border-s left-0 inset-y-0 h-[calc(100%+4rem)] -translate-y-8' />
-          <div className='max-sm:hidden absolute border-e right-0 inset-y-0 h-[calc(100%+4rem)] -translate-y-8' />
-
-          <div className='max-sm:hidden absolute border-t -top-1 inset-x-0 w-[calc(100%+3rem)] -translate-x-6' />
-          <div className='max-sm:hidden absolute border-b -bottom-1 inset-x-0 w-[calc(100%+3rem)] -translate-x-6' />
-          <div className='max-sm:hidden absolute border-s -left-1 inset-y-0 h-[calc(100%+3rem)] -translate-y-6' />
-          <div className='max-sm:hidden absolute border-e -right-1 inset-y-0 h-[calc(100%+3rem)] -translate-y-6' />
-
-          <Logo />
-          <div className='mb-7 w-full flex items-center justify-center overflow-hidden'>
-            <Separator />
-            <span className='text-sm px-2'>Register</span>
-            <Separator />
-          </div>
-          <RegisterForm />
-          <div className='mt-5 space-y-5'>
-            <p className='text-sm text-center'>
-              Already have an account?
-              <Link
-                href='/login'
-                className='ml-1 underline text-muted-foreground'
-              >
-                Login account
-              </Link>
-            </p>
-          </div>
-        </div>
-        <div className='hidden lg:flex'>
-          <Image
-            draggable={false}
-            src={login}
-            alt='Login Image'
-            className='object-cover w-full'
-          />
-        </div>
+    <div className='auth-bg min-h-[90vh] flex items-center justify-center'>
+      <div className='container mx-auto p-4'>
+        <Card className='shadow-lg max-w-lg mx-auto'>
+          <CardContent>
+            <div className='space-y-4 w-fit mx-auto'>
+              <Logo />
+              <article className='text-center space-y-4'>
+                <p>Admin Login</p>
+                <p className='text-secondary-foreground'>
+                  Welcome back! Please enter your credentials
+                </p>
+              </article>
+            </div>
+            <div className='mt-8'>
+              <LoginForm />
+            </div>
+          </CardContent>
+          <CardFooter className='justify-center text-primary text-sm'>
+            <Link
+              href={'/forgot-password'}
+              className='hover:underline hover:opacity-90'
+            >
+              Forgot password?
+            </Link>
+          </CardFooter>
+        </Card>
+        <p className='text-center text-sm text-muted-foreground mt-6'>
+          &copy; 2025 EduCenter. All rights reserved.
+        </p>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
 
 export default function LoginPage() {
   return (
-    <div className='login-bg min-h-[90vh] flex items-center justify-center'>
+    <div className='auth-bg min-h-[90vh] flex items-center justify-center'>
       <div className='container mx-auto p-4'>
         <Card className='shadow-lg max-w-lg mx-auto'>
           <CardContent>
