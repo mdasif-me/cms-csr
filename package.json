@@ -1,0 +1,82 @@
+{
+  "name": "coaching-management-system",
+  "description": "Coaching Management System is a comprehensive web application designed to streamline the operations of coaching centers. It offers features such as student enrollment, course management, attendance tracking, fee management, and performance analytics, all aimed at enhancing the efficiency and effectiveness of coaching institutions.",
+  "author": {
+    "name": "Muhammad Asif",
+    "email": "cn.mdasif@gmail.com",
+    "url": "http://muhammadasif.me/"
+  },
+  "contributors": [
+    {
+      "name": "Muhammad Asif",
+      "email": "cn.mdasif@gmail.com",
+      "url": "http://muhammadasif.me/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mdasif-me/coaching-management-system"
+  },
+  "bugs": {
+    "url": "https://github.com/mdasif-me/coaching-management-system/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "coaching",
+    "education",
+    "student enrollment",
+    "course management",
+    "attendance tracking",
+    "fee management",
+    "performance analytics",
+    "quality",
+    "customer support"
+  ],
+  "license": "UNLICENSED",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@radix-ui/react-separator": "^1.1.8",
+    "@radix-ui/react-slot": "^1.2.4",
+    "axios": "^1.13.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.562.0",
+    "next": "16.1.1",
+    "next-themes": "^0.4.6",
+    "postcss": "^8.5.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.69.0",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18",
+    "universal-cookie": "^8.0.1",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.1",
+    "tw-animate-css": "^1.4.0",
+    "typescript": "^5"
+  }
+}
