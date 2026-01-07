@@ -1,52 +1,62 @@
 import { ResetPasswordForm } from '@/lib/features/auth/components/reset-password-form';
-import Image from 'next/image';
 import Link from 'next/link';
-import login from 'public/img/auth/login.svg';
+import { ResendVerifyEmailForm } from '../../../lib/features/auth/components/resend-verify-email-form';
 import Logo from '../../components/shared/logo';
-import { Separator } from '../../components/shared/ui/separator';
+import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '../../components/shared/ui/popover';
 
 export default function ResetPasswordPage() {
   return (
-    <div className='flex items-center justify-center'>
-      <div className='w-full h-full grid lg:grid-cols-2'>
-        <div className='relative sm:max-w-lg m-auto w-full flex flex-col items-center p-8 outline-0 sm:outline-2 outline-border/40 dark:outline-border/80 outline-offset-0.5'>
-          <div className='max-sm:hidden absolute border-t top-0 inset-x-0 w-[calc(100%+4rem)] -translate-x-8' />
-          <div className='max-sm:hidden absolute border-b bottom-0 inset-x-0 w-[calc(100%+4rem)] -translate-x-8' />
-          <div className='max-sm:hidden absolute border-s left-0 inset-y-0 h-[calc(100%+4rem)] -translate-y-8' />
-          <div className='max-sm:hidden absolute border-e right-0 inset-y-0 h-[calc(100%+4rem)] -translate-y-8' />
-
-          <div className='max-sm:hidden absolute border-t -top-1 inset-x-0 w-[calc(100%+3rem)] -translate-x-6' />
-          <div className='max-sm:hidden absolute border-b -bottom-1 inset-x-0 w-[calc(100%+3rem)] -translate-x-6' />
-          <div className='max-sm:hidden absolute border-s -left-1 inset-y-0 h-[calc(100%+3rem)] -translate-y-6' />
-          <div className='max-sm:hidden absolute border-e -right-1 inset-y-0 h-[calc(100%+3rem)] -translate-y-6' />
-
-          <Logo />
-          <div className='mb-7 w-full flex items-center justify-center overflow-hidden'>
-            <Separator />
-            <span className='text-sm px-2 whitespace-nowrap'>
-              Reset Password
-            </span>
-            <Separator />
-          </div>
-          <ResetPasswordForm />
-
-          <Separator className='my-7' />
-          <p className='text-muted-foreground'>
-            You may contact{' '}
-            <Link href='/support' className='text-primary font-medium'>
-              Customer Service
-            </Link>{' '}
-            for help restoring access to your account.
-          </p>
-        </div>
-        <div className='hidden lg:flex'>
-          <Image
-            draggable={false}
-            src={login}
-            alt='Login Image'
-            className='object-cover w-full'
-          />
-        </div>
+    <div className='auth-bg min-h-[90vh] flex items-center justify-center'>
+      <div className='container mx-auto p-4'>
+        <Card className='shadow-lg max-w-lg mx-auto'>
+          <CardContent>
+            <div className='space-y-4 w-fit mx-auto'>
+              <Logo />
+              <article className='text-center space-y-4'>
+                <p>Admin Reset Password</p>
+                <p className='text-secondary-foreground'>
+                  Please enter your email to reset your password.
+                </p>
+              </article>
+            </div>
+            <div className='mt-8'>
+              <ResetPasswordForm />
+            </div>
+          </CardContent>
+          <CardFooter className='justify-center text-sm'>
+            Don&apos;t want to reset?{' '}
+            <Link
+              href={'/login'}
+              className='hover:underline hover:opacity-90 ml-1 text-primary'
+            >
+              Login
+            </Link>
+          </CardFooter>
+          <CardFooter className='justify-center text-sm'>
+            Didn&apos;t receive the email?{' '}
+            <Popover>
+              <PopoverTrigger>
+                <button
+                  type='button'
+                  className='hover:underline hover:opacity-90 ml-1 text-primary'
+                >
+                  Resend
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className='w-auto min-w-sm'>
+                <ResendVerifyEmailForm />
+              </PopoverContent>
+            </Popover>
+          </CardFooter>
+        </Card>
+        <p className='text-center text-sm text-muted-foreground mt-6'>
+          &copy; 2025 EduCenter. All rights reserved.
+        </p>
       </div>
     </div>
   );

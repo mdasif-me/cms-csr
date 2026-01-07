@@ -18,6 +18,7 @@ import {
   resendVerificationEmailSchema,
 } from '@/lib/features/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { MailIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
@@ -44,27 +45,37 @@ export function ResendVerifyEmailForm() {
 
   return (
     <Form {...form}>
-      <form className='w-full space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type='email'
-                  placeholder='Enter your email'
-                  className='w-full'
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form
+        className='w-full space-y-4 flex items-center justify-between gap-4'
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <div className='w-full'>
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <div className='flex items-center relative'>
+                    <span className='absolute left-3 cursor-pointer'>
+                      <MailIcon className='text-muted-foreground' />
+                    </span>
+                    <Input
+                      type='email'
+                      placeholder='admin@educenter.com'
+                      className='w-full pl-11 h-11 rounded-md'
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <Button type='submit' className='w-full' disabled={isLoading}>
+        <Button type='submit' className='h-11 mt-1.5' disabled={isLoading}>
           {isLoading ? (
             <div className='flex items-center gap-1'>
               <Spinner />
