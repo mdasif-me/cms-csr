@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Public_Sans } from 'next/font/google';
-import { Footer } from '../lib/features/root/components/footer';
 import { Toaster } from './components/shared/ui/sonner';
 import './styles/globals.css';
 
@@ -24,7 +23,6 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${publicSans.variable} antialiased`}>
         {children}
-        <Footer />
         <Toaster position='top-center' />
       </body>
     </html>
