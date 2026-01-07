@@ -1,6 +1,7 @@
 import { LoginForm } from '@/lib/features/auth';
+import Link from 'next/link';
 import Logo from '../../components/shared/logo';
-import { Card, CardContent } from '../../components/shared/ui/card';
+import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
 
 export default function LoginPage() {
   return (
@@ -21,6 +22,14 @@ export default function LoginPage() {
               <LoginForm />
             </div>
           </CardContent>
+          <CardFooter className='justify-center text-primary text-sm'>
+            <Link
+              href={'/forgot-password'}
+              className='hover:underline hover:opacity-90'
+            >
+              Forgot password?
+            </Link>
+          </CardFooter>
         </Card>
         <p className='text-center text-sm text-muted-foreground mt-6'>
           &copy; 2025 EduCenter. All rights reserved.
