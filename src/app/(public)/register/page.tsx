@@ -3,7 +3,7 @@ import { RegisterForm } from '../../../lib/features/auth/components/register-for
 import Logo from '../../components/shared/logo';
 import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className='auth-bg min-h-[98vh] flex items-center justify-center'>
       <div className='container mx-auto p-4'>
