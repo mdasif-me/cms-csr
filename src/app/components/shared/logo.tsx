@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import logo from 'public/logo.svg';
-export default function Logo() {
+export default function Logo(props: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <Image
       draggable={false}
@@ -9,7 +9,8 @@ export default function Logo() {
       width={128}
       height={128}
       alt='Logo'
-      className='h-32 w-32 object-contain'
+      className='h-16 w-16 object-contain logo mx-auto'
+      {...props}
     />
   );
 }

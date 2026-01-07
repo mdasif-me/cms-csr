@@ -17,7 +17,7 @@ import { Spinner } from '@/app/components/shared/ui/spinner';
 import { useAuth } from '@/lib/auth/hooks/use-auth';
 import { loginSchema, type LoginFormData } from '@/lib/features/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EyeClosedIcon, EyeIcon } from 'lucide-react';
+import { EyeClosedIcon, EyeIcon, LockIcon, MailIcon } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
@@ -52,20 +52,25 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form className='w-full space-y-4' onSubmit={form.handleSubmit(onSubmit)}>
+      <form className='w-full space-y-5' onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email Address</FormLabel>
               <FormControl>
-                <Input
-                  type='email'
-                  placeholder='Enter your email'
-                  className='w-full'
-                  {...field}
-                />
+                <div className='flex items-center relative'>
+                  <span className='absolute left-3 cursor-pointer'>
+                    <MailIcon className='text-muted-foreground' />
+                  </span>
+                  <Input
+                    type='email'
+                    placeholder='admin@educenter.com'
+                    className='w-full pl-11'
+                    {...field}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,17 +84,24 @@ export function LoginForm() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className='flex items-center relative'>
+                  <span className='absolute left-3 cursor-pointer'>
+                    <LockIcon className='text-muted-foreground' />
+                  </span>
                   <Input
                     type={isPassVisible ? 'text' : 'password'}
                     placeholder='Enter your password'
-                    className='w-full pr-10'
+                    className='w-full pr-11 pl-11'
                     {...field}
                   />
                   <span
                     className='absolute right-3 cursor-pointer'
                     onClick={togglePasswordVisibility}
                   >
-                    {isPassVisible ? <EyeClosedIcon /> : <EyeIcon />}
+                    {isPassVisible ? (
+                      <EyeClosedIcon className='text-muted-foreground' />
+                    ) : (
+                      <EyeIcon className='text-muted-foreground' />
+                    )}
                   </span>
                 </div>
               </FormControl>
@@ -122,7 +134,12 @@ export function LoginForm() {
           )}
         />
 
-        <Button type='submit' className='mt-4 w-full' disabled={isLoading}>
+        <Button
+          type='submit'
+          variant={'gradient'}
+          className='mt-4 w-full'
+          disabled={isLoading}
+        >
           {isLoading ? (
             <div className='flex items-center gap-1'>
               <Spinner />

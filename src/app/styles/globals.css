@@ -55,22 +55,22 @@
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
+  --foreground: #0f172b;
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card-foreground: #0f172b;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
+  --popover-foreground: #0f172b;
   --primary: #10b981;
   --primary-foreground: oklch(0.986 0.031 120.757);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --secondary: ##f8fafc;
+  --secondary-foreground: #45556c;
+  --muted: ##f8fafc;
+  --muted-foreground: #90a1b9;
+  --accent: ##f8fafc;
+  --accent-foreground: #45556c;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
+  --border: #e2e8f0;
+  --input: #e2e8f0;
   --ring: #10b981;
   --chart-1: oklch(0.871 0.15 154.449);
   --chart-2: oklch(0.723 0.219 149.579);
@@ -78,21 +78,21 @@
   --chart-4: oklch(0.527 0.154 150.069);
   --chart-5: oklch(0.448 0.119 151.328);
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-foreground: #0f172b;
   --sidebar-primary: #10b981;
   --sidebar-primary-foreground: oklch(0.986 0.031 120.757);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-accent: ##f8fafc;
+  --sidebar-accent-foreground: #45556c;
+  --sidebar-border: #e2e8f0;
   --sidebar-ring: #10b981;
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: #0f172b;
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.21 0.006 285.885);
+  --card: #45556c;
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.21 0.006 285.885);
+  --popover: #45556c;
   --popover-foreground: oklch(0.985 0 0);
   --primary: #10b981;
   --primary-foreground: oklch(0.986 0.031 120.757);
@@ -111,7 +111,7 @@
   --chart-3: oklch(0.627 0.194 149.214);
   --chart-4: oklch(0.527 0.154 150.069);
   --chart-5: oklch(0.448 0.119 151.328);
-  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar: #45556c;
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.768 0.233 130.85);
   --sidebar-primary-foreground: oklch(0.986 0.031 120.757);
@@ -137,10 +137,25 @@
     @apply bg-background text-foreground;
   }
 }
+
+.logo {
+  border-radius: 16px;
+  background: var(--Primary-color, #10b981);
+  box-shadow: 0 10px 15px -3px rgba(43, 127, 255, 0.25),
+    0 4px 6px -4px rgba(43, 127, 255, 0.25);
+}
 .login-bg {
   background-image: url('../../../public/img/auth/login-bg.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
+}
+
+.gradient-btn {
+  border-radius: 14px;
+  background: var(
+    --linear-primary,
+    linear-gradient(180deg, #00bc7d 0%, #009689 100%)
+  );
 }
