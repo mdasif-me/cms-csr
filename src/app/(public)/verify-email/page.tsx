@@ -1,5 +1,5 @@
-import { LoginForm } from '@/lib/features/auth';
 import Link from 'next/link';
+import { OTPVerificationForm } from '../../../lib/features/auth/components/otp-form';
 import Logo from '../../components/shared/logo';
 import { Card, CardContent, CardFooter } from '../../components/shared/ui/card';
 
@@ -19,7 +19,7 @@ export default function VerifyPage() {
               </article>
             </div>
             <div className='mt-8'>
-              <LoginForm />
+              <OTPVerificationForm />
             </div>
           </CardContent>
           <CardFooter className='justify-center text-primary text-sm'>

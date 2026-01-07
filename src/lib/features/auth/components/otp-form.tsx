@@ -10,7 +10,7 @@ import {
 } from '../../../../app/components/shared/ui/popover';
 import { ResendVerifyEmailForm } from './resend-verify-email-form';
 
-export function CreativeOTPInputDemo() {
+export function OTPVerificationForm() {
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleComplete = (otp: string) => {
@@ -23,7 +23,7 @@ export function CreativeOTPInputDemo() {
   };
 
   return (
-    <div className='z-20 flex flex-col items-center gap-y-10 p-8'>
+    <div className='z-20 flex flex-col items-center gap-y-10'>
       <div className='space-y-2 text-center'>
         <motion.h3
           className='text-xl font-semibold dark:text-white'
