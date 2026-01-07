@@ -1,6 +1,8 @@
 import { PERMISSIONS } from '@/lib/auth/constants/permissions';
 import { PermissionGuard } from '../../components/auth/auth-guard';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   // const dashboardData = await apiClient.get('/dashboard');
 
