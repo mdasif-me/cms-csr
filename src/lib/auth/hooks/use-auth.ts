@@ -103,15 +103,26 @@ export function useAuth(): IUseAuthReturn {
     ) => {
       setIsLoading(true);
       try {
-        // TODO: Implement register mutation in GraphQL
-        toast.info('Registration via GraphQL - Coming soon');
-        console.log('Register:', {
-          name,
+        // Validate password match on frontend (backend schema doesn't include confirmPassword)
+        if (password !== confirm_password) {
+          throw new Error('Passwords do not match');
+        }
+
+        // Validate terms acceptance on frontend (backend schema doesn't include acceptTerms)
+        if (!accept_terms) {
+          throw new Error('You must accept the terms and conditions');
+        }
+
+        const response = await graphqlAuthApi.register({
+          fullName: name,
           email,
           password,
-          confirm_password,
-          accept_terms,
         });
+
+        toast.success(response.message);
+
+        // Redirect to login page after successful registration
+        router.push('/login?registered=true');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(error?.message || 'Registration failed');
@@ -121,19 +132,21 @@ export function useAuth(): IUseAuthReturn {
         setIsLoading(false);
       }
     },
-    []
+    [router]
   );
 
   const verifyEmail = useCallback(
     async (token: string) => {
       setIsLoading(true);
       try {
-        // TODO: Implement verifyEmail mutation in GraphQL
-        toast.info('Email verification via GraphQL - Coming soon');
+        // TODO: Backend needs to implement VERIFY_EMAIL mutation
+        toast.info(
+          'Email verification - Mutation not yet available on backend'
+        );
         console.log('Verify email with token:', token);
 
         await refreshUser();
-        router.push('/login');
+        router.push('/login?verified=true');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(error.message);
@@ -150,8 +163,8 @@ export function useAuth(): IUseAuthReturn {
   const resendVerificationEmail = useCallback(async (email: string) => {
     setIsLoading(true);
     try {
-      // TODO: Implement resendVerificationEmail mutation in GraphQL
-      toast.info('Resend verification via GraphQL - Coming soon');
+      // TODO: Backend needs to implement RESEND_VERIFICATION mutation
+      toast.info('Resend verification - Mutation not yet available on backend');
       console.log('Resend verification to:', email);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -166,9 +179,8 @@ export function useAuth(): IUseAuthReturn {
   const forgotPassword = useCallback(async (email: string) => {
     setIsLoading(true);
     try {
-      // TODO: Implement forgotPassword mutation in GraphQL
-      toast.info('Forgot password via GraphQL - Coming soon');
-      console.log('Forgot password for:', email);
+      const response = await graphqlAuthApi.forgotPassword({ email });
+      toast.success(response.message);
     } catch (error) {
       console.error('Forgot password failed:', error);
       throw error;
@@ -181,10 +193,21 @@ export function useAuth(): IUseAuthReturn {
     async (token: string, newPassword: string) => {
       setIsLoading(true);
       try {
-        // TODO: Implement resetPassword mutation in GraphQL
-        toast.info('Reset password via GraphQL - Coming soon');
-        console.log('Reset password with token:', token, newPassword);
-        router.push('/login');
+        // Extract email from URL params if available
+        const searchParams = new URLSearchParams(window.location.search);
+        const email = searchParams.get('email') || '';
+
+        if (!email) {
+          throw new Error('Email is required for password reset');
+        }
+
+        const response = await graphqlAuthApi.resetPassword({
+          email,
+          newPassword,
+        });
+
+        toast.success(response.message);
+        router.push('/login?reset=true');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(error.message);

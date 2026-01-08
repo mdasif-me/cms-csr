@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-// login
+// User Login Mutation
 export const USER_LOGIN = gql`
   mutation UserLogin($input: LoginUserInput!) {
     userLogin(input: $input) {
@@ -34,17 +34,27 @@ export const USER_LOGIN = gql`
   }
 `;
 
-// registration
-export const USER_REGISTER = gql`
-  mutation UserRegister($input: RegisterUserInput!) {
-    userRegister(input: $input) {
+// User Registration Mutation
+export const USER_REGISTRATION = gql`
+  mutation UserRegistration($input: RegisterUserInput!) {
+    userRegistration(input: $input) {
       edge {
         data {
-          uid
+          banner_url
+          created_at
+          deleted_at
           email
           full_name
+          location
+          logo_url
+          phone_number
+          reminder_by
           role
           status
+          uid
+          updated_at
+          website_url
+          whatsapp_number
         }
         node
       }
@@ -52,7 +62,7 @@ export const USER_REGISTER = gql`
   }
 `;
 
-// refresh token
+// Refresh Token Mutation
 export const REFRESH_TOKEN = gql`
   mutation RefreshToken($input: RefreshTokenInput!) {
     refreshToken(input: $input) {
@@ -69,7 +79,63 @@ export const REFRESH_TOKEN = gql`
   }
 `;
 
-// logout
+// Forgot Password Mutation
+export const FORGOT_PASSWORD = gql`
+  mutation ForgotPassword($input: ForgotPasswordInput!) {
+    forgotPassword(input: $input) {
+      edge {
+        data {
+          banner_url
+          created_at
+          deleted_at
+          email
+          full_name
+          location
+          logo_url
+          phone_number
+          reminder_by
+          role
+          status
+          uid
+          updated_at
+          website_url
+          whatsapp_number
+        }
+        node
+      }
+    }
+  }
+`;
+
+// Reset Password Mutation
+export const RESET_PASSWORD = gql`
+  mutation ResetPassword($input: ResetPasswordInput!) {
+    resetPassword(input: $input) {
+      edge {
+        data {
+          banner_url
+          created_at
+          deleted_at
+          email
+          full_name
+          location
+          logo_url
+          phone_number
+          reminder_by
+          role
+          status
+          uid
+          updated_at
+          website_url
+          whatsapp_number
+        }
+        node
+      }
+    }
+  }
+`;
+
+// User Logout Mutation
 export const USER_LOGOUT = gql`
   mutation UserLogout {
     userLogout {
