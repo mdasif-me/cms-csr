@@ -21,10 +21,7 @@ export default async function ProtectedLayout({
     <ErrorBoundary>
       <AuthProvider initialUser={user}>
         <div className='min-h-screen bg-gray-50'>
-          {/* <Navigation user={user} /> */}
-
           <main className='container mx-auto px-4 py-8'>{children}</main>
-
           <footer className='border-t border-gray-200 mt-8 py-6'>
             <div className='container mx-auto px-4 text-center text-gray-600'>
               <p>

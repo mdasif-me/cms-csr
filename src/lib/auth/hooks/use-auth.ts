@@ -1,4 +1,4 @@
-import { authApi } from '@/lib/api/endpoints';
+import { graphqlAuthApi } from '@/lib/graphql';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -55,20 +55,23 @@ export function useAuth(): IUseAuthReturn {
   }, []);
 
   const login = useCallback(
-    async (email: string, password: string, remember_me?: boolean) => {
+    async (email: string, password: string) => {
       setIsLoading(true);
       try {
-        const response = await authApi.login({ email, password, remember_me });
+        const response = await graphqlAuthApi.login({
+          email,
+          password,
+        });
         const data = response.data;
         toast.success(response.message);
 
         await tokenManager.setTokens({
-          accessToken: data.access_token,
-          refreshToken: data.refresh_token,
-          expiresAt: Date.now() + data.expires_in * 1000,
+          accessToken: data.tokens.accessToken,
+          refreshToken: data.tokens.refreshToken,
+          expiresAt: new Date(data.tokens.accessTokenExpiresAt).getTime(),
         });
 
-        const userData = tokenManager.decodeToken(data.access_token);
+        const userData = tokenManager.decodeToken(data.tokens.accessToken);
         setUser(userData);
 
         // redirect based on role or return URL
@@ -100,14 +103,15 @@ export function useAuth(): IUseAuthReturn {
     ) => {
       setIsLoading(true);
       try {
-        const response = await authApi.register({
+        // TODO: Implement register mutation in GraphQL
+        toast.info('Registration via GraphQL - Coming soon');
+        console.log('Register:', {
           name,
           email,
           password,
           confirm_password,
           accept_terms,
         });
-        toast.success(response.message);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(error?.message || 'Registration failed');
@@ -124,8 +128,9 @@ export function useAuth(): IUseAuthReturn {
     async (token: string) => {
       setIsLoading(true);
       try {
-        const response = await authApi.verifyEmail(token);
-        toast.success(response.message);
+        // TODO: Implement verifyEmail mutation in GraphQL
+        toast.info('Email verification via GraphQL - Coming soon');
+        console.log('Verify email with token:', token);
 
         await refreshUser();
         router.push('/login');
@@ -139,31 +144,31 @@ export function useAuth(): IUseAuthReturn {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [router]
   );
-  const resendVerificationEmail = useCallback(
-    async (email: string) => {
-      setIsLoading(true);
-      try {
-        const response = await authApi.resendVerificationEmail(email);
-        toast.success(response.message);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        toast.error(error.message);
-        console.error('Email verification failed:', error);
-        throw error;
-      } finally {
-        setIsLoading(false);
-      }
-    },
 
-    []
-  );
+  const resendVerificationEmail = useCallback(async (email: string) => {
+    setIsLoading(true);
+    try {
+      // TODO: Implement resendVerificationEmail mutation in GraphQL
+      toast.info('Resend verification via GraphQL - Coming soon');
+      console.log('Resend verification to:', email);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.error(error.message);
+      console.error('Email verification failed:', error);
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const forgotPassword = useCallback(async (email: string) => {
     setIsLoading(true);
     try {
-      await authApi.forgotPassword(email);
+      // TODO: Implement forgotPassword mutation in GraphQL
+      toast.info('Forgot password via GraphQL - Coming soon');
+      console.log('Forgot password for:', email);
     } catch (error) {
       console.error('Forgot password failed:', error);
       throw error;
@@ -176,10 +181,9 @@ export function useAuth(): IUseAuthReturn {
     async (token: string, newPassword: string) => {
       setIsLoading(true);
       try {
-        const response = await authApi.resetPassword(token, newPassword);
-        toast.success(
-          response.message || 'Password has been reset successfully.'
-        );
+        // TODO: Implement resetPassword mutation in GraphQL
+        toast.info('Reset password via GraphQL - Coming soon');
+        console.log('Reset password with token:', token, newPassword);
         router.push('/login');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
@@ -194,7 +198,7 @@ export function useAuth(): IUseAuthReturn {
 
   const logout = useCallback(async () => {
     try {
-      await authApi.logout();
+      await graphqlAuthApi.logout();
     } catch (error) {
       console.error('Logout API error:', error);
     } finally {

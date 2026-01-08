@@ -1,54 +1,53 @@
-import { PERMISSIONS } from '@/lib/auth/constants/permissions';
-import { PermissionGuard } from '../../components/auth/auth-guard';
+import { AppSidebar } from '@/app/components/app-sidebar';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/app/components/shared/ui/breadcrumb';
+import { Separator } from '@/app/components/shared/ui/separator';
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/app/components/shared/ui/sidebar';
 
-export const dynamic = 'force-dynamic';
-
-export default async function DashboardPage() {
-  // const dashboardData = await apiClient.get('/dashboard');
-
+export default function Page() {
   return (
-    <div className='space-y-8'>
-      <div className='flex justify-between items-center'>
-        <div>
-          <h1 className='text-3xl font-bold text-gray-900'>Dashboard</h1>
-          <p className='text-gray-600 mt-2'>
-            Welcome back! Here&apos;s what&apos;s happening.
-          </p>
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className='flex h-16 shrink-0 items-center gap-2 border-b px-4'>
+          <SidebarTrigger className='-ml-1' />
+          <Separator
+            orientation='vertical'
+            className='mr-2 data-[orientation=vertical]:h-4'
+          />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className='hidden md:block'>
+                <BreadcrumbLink href='#'>
+                  Building Your Application
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className='hidden md:block' />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </header>
+        <div className='flex flex-1 flex-col gap-4 p-4'>
+          <div className='grid auto-rows-min gap-4 md:grid-cols-3'>
+            <div className='bg-muted/50 aspect-video rounded-xl' />
+            <div className='bg-muted/50 aspect-video rounded-xl' />
+            <div className='bg-muted/50 aspect-video rounded-xl' />
+          </div>
+          <div className='bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min' />
         </div>
-
-        <PermissionGuard
-          permission={PERMISSIONS.ANALYTICS.EXPORT}
-          fallback={null}
-        >
-          <button className='px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors'>
-            Export Report
-          </button>
-        </PermissionGuard>
-      </div>
-
-      <div>Dashboard States</div>
-
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-        <PermissionGuard permission={PERMISSIONS.ORDER.VIEW}>
-          <div>Recent Orders</div>
-        </PermissionGuard>
-
-        <PermissionGuard permission={PERMISSIONS.USER.VIEW}>
-          <div>Recent Users</div>
-        </PermissionGuard>
-      </div>
-
-      {/* admin-only section */}
-      <PermissionGuard role='admin' fallback={null}>
-        <div className='bg-blue-50 border border-blue-200 rounded-lg p-6'>
-          <h2 className='text-xl font-semibold text-blue-900 mb-4'>
-            Admin Insights
-          </h2>
-          <p className='text-blue-700'>
-            This section is only visible to administrators.
-          </p>
-        </div>
-      </PermissionGuard>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
