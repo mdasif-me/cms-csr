@@ -55,12 +55,13 @@ export function useAuth(): IUseAuthReturn {
   }, []);
 
   const login = useCallback(
-    async (email: string, password: string) => {
+    async (email: string, password: string, remember_me?: boolean) => {
       setIsLoading(true);
       try {
         const response = await graphqlAuthApi.login({
           email,
           password,
+          remember_me,
         });
         const data = response.data;
         toast.success(response.message);

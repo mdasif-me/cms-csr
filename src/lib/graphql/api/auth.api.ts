@@ -8,6 +8,7 @@ import {
   USER_LOGOUT,
   USER_REGISTRATION,
 } from '../mutations/auth.mutations';
+import type { TApiResponse } from '../types/api.types';
 import type {
   IForgotPasswordInput,
   IForgotPasswordResponse,
@@ -19,6 +20,8 @@ import type {
   IResetPasswordInput,
   IResetPasswordResponse,
   IResetPasswordVariables,
+  ITokenData,
+  IUserData,
   IUserLoginResponse,
   IUserLoginVariables,
   IUserLogoutResponse,
@@ -28,17 +31,10 @@ import type {
 
 const cookies = new Cookies();
 
-/**
- * GraphQL Auth API Service
- * Complete authentication service for all auth operations
- */
 export const graphqlAuthApi = {
-  /**
-   * User Login
-   * @param input - Login credentials (email, password, remember_me)
-   * @returns User data with tokens
-   */
-  login: async (input: ILoginUserInput) => {
+  login: async (
+    input: ILoginUserInput
+  ): Promise<TApiResponse<IUserData & { tokens: ITokenData }>> => {
     try {
       const result = await apolloClient.mutate<
         IUserLoginResponse,
@@ -59,7 +55,6 @@ export const graphqlAuthApi = {
       const userData = result.data.userLogin.edge.data;
       const { tokens } = userData;
 
-      // Store tokens in cookies
       cookies.set('access_token', tokens.accessToken, {
         path: '/',
         expires: new Date(tokens.accessTokenExpiresAt),
@@ -85,12 +80,9 @@ export const graphqlAuthApi = {
     }
   },
 
-  /**
-   * User Registration
-   * @param input - Registration data
-   * @returns Registered user data
-   */
-  register: async (input: IRegisterUserInput) => {
+  register: async (
+    input: IRegisterUserInput
+  ): Promise<TApiResponse<IUserData>> => {
     try {
       const result = await apolloClient.mutate<
         IUserRegistrationResponse,
@@ -122,12 +114,9 @@ export const graphqlAuthApi = {
     }
   },
 
-  /**
-   * Refresh Access Token
-   * @param refreshToken - Refresh token
-   * @returns New tokens
-   */
-  refreshToken: async (refreshToken: string) => {
+  refreshToken: async (
+    refreshToken: string
+  ): Promise<TApiResponse<ITokenData>> => {
     try {
       const result = await apolloClient.mutate<
         IRefreshTokenResponse,
@@ -143,21 +132,23 @@ export const graphqlAuthApi = {
 
       const tokens = result.data?.refreshToken?.edge?.data;
 
-      if (tokens) {
-        cookies.set('access_token', tokens.accessToken, {
-          path: '/',
-          expires: new Date(tokens.accessTokenExpiresAt),
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
-        });
-
-        cookies.set('refresh_token', tokens.refreshToken, {
-          path: '/',
-          expires: new Date(tokens.refreshTokenExpiresAt),
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
-        });
+      if (!tokens) {
+        throw new Error('Invalid response from server');
       }
+
+      cookies.set('access_token', tokens.accessToken, {
+        path: '/',
+        expires: new Date(tokens.accessTokenExpiresAt),
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      });
+
+      cookies.set('refresh_token', tokens.refreshToken, {
+        path: '/',
+        expires: new Date(tokens.refreshTokenExpiresAt),
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+      });
 
       return {
         success: true,
@@ -170,12 +161,9 @@ export const graphqlAuthApi = {
     }
   },
 
-  /**
-   * Forgot Password
-   * @param input - Email and reminder method
-   * @returns Success response
-   */
-  forgotPassword: async (input: IForgotPasswordInput) => {
+  forgotPassword: async (
+    input: IForgotPasswordInput
+  ): Promise<TApiResponse<IUserData>> => {
     try {
       const result = await apolloClient.mutate<
         IForgotPasswordResponse,
@@ -189,9 +177,14 @@ export const graphqlAuthApi = {
         throw result.error;
       }
 
+      const userData = result.data?.forgotPassword?.edge?.data;
+      if (!userData) {
+        throw new Error('Invalid response from server');
+      }
+
       return {
         success: true,
-        data: result.data?.forgotPassword?.edge?.data,
+        data: userData,
         message: 'Password reset instructions have been sent to your email.',
       };
     } catch (error) {
@@ -200,12 +193,9 @@ export const graphqlAuthApi = {
     }
   },
 
-  /**
-   * Reset Password
-   * @param input - Email and new password
-   * @returns Updated user data
-   */
-  resetPassword: async (input: IResetPasswordInput) => {
+  resetPassword: async (
+    input: IResetPasswordInput
+  ): Promise<TApiResponse<IUserData>> => {
     try {
       const result = await apolloClient.mutate<
         IResetPasswordResponse,
@@ -219,9 +209,14 @@ export const graphqlAuthApi = {
         throw result.error;
       }
 
+      const userData = result.data?.resetPassword?.edge?.data;
+      if (!userData) {
+        throw new Error('Invalid response from server');
+      }
+
       return {
         success: true,
-        data: result.data?.resetPassword?.edge?.data,
+        data: userData,
         message: 'Password has been reset successfully.',
       };
     } catch (error) {
@@ -230,10 +225,7 @@ export const graphqlAuthApi = {
     }
   },
 
-  /**
-   * User Logout
-   */
-  logout: async () => {
+  logout: async (): Promise<TApiResponse<null>> => {
     try {
       const result = await apolloClient.mutate<IUserLogoutResponse>({
         mutation: USER_LOGOUT,
@@ -242,21 +234,17 @@ export const graphqlAuthApi = {
       if (result.error) {
         throw result.error;
       }
-
-      // Clear tokens from cookies
       cookies.remove('access_token', { path: '/' });
       cookies.remove('refresh_token', { path: '/' });
-
-      // Clear Apollo cache
       await apolloClient.clearStore();
 
       return {
         success: true,
+        data: null,
         message: result.data?.userLogout?.message || 'Logout successful',
       };
     } catch (error) {
       console.error('GraphQL Logout Error:', error);
-      // Clear cookies even if request fails
       cookies.remove('access_token', { path: '/' });
       cookies.remove('refresh_token', { path: '/' });
       throw error;

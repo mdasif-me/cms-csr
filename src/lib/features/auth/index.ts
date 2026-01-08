@@ -1,8 +1,13 @@
 export { LoginForm } from './components';
+
+export { loginSchema } from './schemas/login.schema';
 export {
-  loginSchema,
-  type LoginForm as LoginFormData,
-} from './schemas/login.schema';
-export * from './schemas/password.schema';
-export * from './schemas/profile.schema';
-export * from './schemas/register.schema';
+  changePasswordSchema,
+  forgotPasswordSchema,
+  resendVerificationEmailSchema,
+  resetPasswordSchema,
+} from './schemas/password.schema';
+export { registerSchema } from './schemas/register.schema';
+
+export * from './schemas';
+export * from './types';
